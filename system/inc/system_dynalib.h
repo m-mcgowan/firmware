@@ -86,6 +86,7 @@ DYNALIB_FN(BASE_IDX + 5, system, led_signal_status, const LEDStatusData*(int, vo
 DYNALIB_FN(BASE_IDX + 6, system, led_pattern_period, uint16_t(int, int, void*))
 
 DYNALIB_FN(BASE_IDX + 7, system, system_format_diag_data, int(const uint16_t*, size_t, unsigned, appender_fn, void*, void*))
+DYNALIB_FN(BASE_IDX + 8, system, system_sleep_pins, int32_t(const uint16_t*, size_t, const InterruptMode*, size_t, long, uint32_t, void*))
 
 DYNALIB_END(system)
 
