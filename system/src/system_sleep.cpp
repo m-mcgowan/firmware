@@ -92,9 +92,7 @@ void sleep_fuel_gauge()
 
 bool network_sleep_flag(uint32_t flags)
 {
-    static_assert(static_cast<int>(SystemSleepNetwork::Off)==0, "expected SystemSleepNetwork::Off==0");
-    static_assert(static_cast<int>(SystemSleepNetwork::Standby)==1, "expected SystemSleepNetwork::Standby==1");
-    return (flags & 1)==0;
+    return (flags & SLEEP_NETWORK_STANDBY.value()) == 0;
 }
 
 int system_sleep_impl(Spark_Sleep_TypeDef sleepMode, long seconds, uint32_t param, void* reserved)
@@ -135,7 +133,8 @@ int system_sleep_impl(Spark_Sleep_TypeDef sleepMode, long seconds, uint32_t para
                 network_disconnect(0, 0, NULL);
                 network_off(0, 0, 0, NULL);
             }
-            HAL_Core_Enter_Standby_Mode(seconds, nullptr);
+            HAL_Core_Enter_Standby_Mode(seconds,
+                (param & SLEEP_DISABLE_WKP_PIN.value()) ? HAL_STANDBY_MODE_FLAG_DISABLE_WKP_PIN : 0);
             break;
 
 #if Wiring_SetupButtonUX
@@ -143,7 +142,8 @@ int system_sleep_impl(Spark_Sleep_TypeDef sleepMode, long seconds, uint32_t para
             network_disconnect(0,0,NULL);
             network_off(0, 0, 0, NULL);
             sleep_fuel_gauge();
-            HAL_Core_Enter_Standby_Mode(seconds, nullptr);
+            HAL_Core_Enter_Standby_Mode(seconds,
+                (param & SLEEP_DISABLE_WKP_PIN.value()) ? HAL_STANDBY_MODE_FLAG_DISABLE_WKP_PIN : 0);
             break;
 #endif
     }
