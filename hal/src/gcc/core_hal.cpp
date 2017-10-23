@@ -234,7 +234,7 @@ void HAL_Core_Execute_Stop_Mode(void)
     MSG("Stop mode not implemented.");
 }
 
-void HAL_Core_Enter_Standby_Mode(uint32_t seconds, void* reserved)
+void HAL_Core_Enter_Standby_Mode(uint32_t seconds, uint32_t flags)
 {
     MSG("Standby mode not implemented.");
 }
